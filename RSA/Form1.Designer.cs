@@ -71,6 +71,8 @@ namespace RSA
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.txtPhiDecryption = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtP
@@ -313,7 +315,7 @@ namespace RSA
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 387);
+            this.label12.Location = new System.Drawing.Point(786, 424);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(114, 17);
             this.label12.TabIndex = 27;
@@ -378,8 +380,9 @@ namespace RSA
             // 
             // txtDdecryption
             // 
-            this.txtDdecryption.Location = new System.Drawing.Point(134, 387);
+            this.txtDdecryption.Location = new System.Drawing.Point(906, 424);
             this.txtDdecryption.Name = "txtDdecryption";
+            this.txtDdecryption.ReadOnly = true;
             this.txtDdecryption.Size = new System.Drawing.Size(98, 22);
             this.txtDdecryption.TabIndex = 38;
             // 
@@ -436,11 +439,29 @@ namespace RSA
             this.txtPhiDecryption.Size = new System.Drawing.Size(100, 22);
             this.txtPhiDecryption.TabIndex = 44;
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(107, 390);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(28, 17);
+            this.label19.TabIndex = 45;
+            this.label19.Text = "e =";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(141, 389);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 22);
+            this.textBox1.TabIndex = 46;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1209, 553);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.txtPhiDecryption);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
@@ -534,6 +555,8 @@ namespace RSA
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtPhiDecryption;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

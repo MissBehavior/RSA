@@ -137,23 +137,27 @@ namespace RSA
         static String encryptedText(String str, int e, int n)
         {
             String encryptedtxt = "";
+            BigInteger nBig = new BigInteger(n);
 
             for (int i = 0; i < str.Length; i++)
             {
                 //ASCII range (full)
-                ulong x = (ulong)((Math.Pow(str[i], e)) % n); //power: str[i] ^ e
-
-                encryptedtxt += (char)(x);
+                BigInteger iBig = new BigInteger(str[i]);
+                BigInteger x = ((BigInteger.Pow(iBig, e)) % nBig);
+                int encryptedX = (int)x;
+                encryptedtxt += (char)(encryptedX);
             }
             return encryptedtxt;
         }
 
 
 
+
+
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
             string encryptedText = txtEncrypted.Text;
-            int dDecryption = Int16.Parse(txtDdecryption.Text);
+            //int dDecryption = Int16.Parse(txtDdecryption.Text);
             int nDecryption = Int16.Parse(txtNdecryption.Text);
             //STEP 1: Find p and q values.
             /*First, we need to find p and q values to canculate φ. For that we use mathematical algorythm - 
@@ -164,9 +168,11 @@ namespace RSA
             int qDecryption = findPrimePair(nDecryption).x;
             txtFindP.Text = pDecryption.ToString();
             txtFindQ.Text = qDecryption.ToString();
-            //STEP 2: Find Phi:
-            int phiDecrypt = (pDecryption - 1) * (qDecryption - 1);
-            txtPhiDecryption.Text = phiDecrypt.ToString();
+            //STEP 2: Find Phi and d:
+            int phiDecryption = (pDecryption - 1) * (qDecryption - 1);
+            txtPhiDecryption.Text = phiDecryption.ToString();
+            int dDecryption = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phiDecryption)); //finding d - private key
+            txtDdecryption.Text = dDecryption.ToString();
             //STEP 3: Decrypt:
             string decryptedtxt = decryptedText(encryptedText, dDecryption, nDecryption);
             txtDecrypted.Text = decryptedtxt;

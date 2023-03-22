@@ -49,10 +49,7 @@ namespace RSA
             this.label9 = new System.Windows.Forms.Label();
             this.txtPublicKeyN = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.btnSavePublicKey = new System.Windows.Forms.Button();
             this.btnSaveEncrypted = new System.Windows.Forms.Button();
-            this.btnOpenPublicKey = new System.Windows.Forms.Button();
-            this.btnOpenEncypted = new System.Windows.Forms.Button();
             this.txtDecrypted = new System.Windows.Forms.TextBox();
             this.btnDecrypt = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -65,7 +62,6 @@ namespace RSA
             this.txtFindP = new System.Windows.Forms.TextBox();
             this.txtNdecryption = new System.Windows.Forms.TextBox();
             this.txtDdecryption = new System.Windows.Forms.TextBox();
-            this.btnClearAll = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtE = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -73,6 +69,8 @@ namespace RSA
             this.txtPhiDecryption = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtP
@@ -237,6 +235,7 @@ namespace RSA
             // 
             this.txtPublicKeyN.Location = new System.Drawing.Point(1010, 212);
             this.txtPublicKeyN.Name = "txtPublicKeyN";
+            this.txtPublicKeyN.ReadOnly = true;
             this.txtPublicKeyN.Size = new System.Drawing.Size(35, 22);
             this.txtPublicKeyN.TabIndex = 18;
             // 
@@ -249,45 +248,19 @@ namespace RSA
             this.label10.TabIndex = 19;
             this.label10.Text = "Encrypted text:";
             // 
-            // btnSavePublicKey
-            // 
-            this.btnSavePublicKey.Location = new System.Drawing.Point(883, 249);
-            this.btnSavePublicKey.Name = "btnSavePublicKey";
-            this.btnSavePublicKey.Size = new System.Drawing.Size(138, 23);
-            this.btnSavePublicKey.TabIndex = 20;
-            this.btnSavePublicKey.Text = "Save Public Key";
-            this.btnSavePublicKey.UseVisualStyleBackColor = true;
-            // 
             // btnSaveEncrypted
             // 
             this.btnSaveEncrypted.Location = new System.Drawing.Point(120, 249);
             this.btnSaveEncrypted.Name = "btnSaveEncrypted";
             this.btnSaveEncrypted.Size = new System.Drawing.Size(156, 23);
             this.btnSaveEncrypted.TabIndex = 21;
-            this.btnSaveEncrypted.Text = "Save Encrypted Text";
+            this.btnSaveEncrypted.Text = "Save Encrypted ";
             this.btnSaveEncrypted.UseVisualStyleBackColor = true;
-            // 
-            // btnOpenPublicKey
-            // 
-            this.btnOpenPublicKey.Location = new System.Drawing.Point(1027, 249);
-            this.btnOpenPublicKey.Name = "btnOpenPublicKey";
-            this.btnOpenPublicKey.Size = new System.Drawing.Size(138, 23);
-            this.btnOpenPublicKey.TabIndex = 22;
-            this.btnOpenPublicKey.Text = "Open Public Key";
-            this.btnOpenPublicKey.UseVisualStyleBackColor = true;
-            // 
-            // btnOpenEncypted
-            // 
-            this.btnOpenEncypted.Location = new System.Drawing.Point(282, 249);
-            this.btnOpenEncypted.Name = "btnOpenEncypted";
-            this.btnOpenEncypted.Size = new System.Drawing.Size(156, 23);
-            this.btnOpenEncypted.TabIndex = 23;
-            this.btnOpenEncypted.Text = "Open Encrypted Text";
-            this.btnOpenEncypted.UseVisualStyleBackColor = true;
+            this.btnSaveEncrypted.Click += new System.EventHandler(this.btnSaveEncrypted_Click);
             // 
             // txtDecrypted
             // 
-            this.txtDecrypted.Location = new System.Drawing.Point(12, 455);
+            this.txtDecrypted.Location = new System.Drawing.Point(12, 593);
             this.txtDecrypted.Multiline = true;
             this.txtDecrypted.Name = "txtDecrypted";
             this.txtDecrypted.Size = new System.Drawing.Size(1180, 80);
@@ -295,7 +268,7 @@ namespace RSA
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(13, 409);
+            this.btnDecrypt.Location = new System.Drawing.Point(12, 547);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(75, 23);
             this.btnDecrypt.TabIndex = 25;
@@ -306,7 +279,7 @@ namespace RSA
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 435);
+            this.label11.Location = new System.Drawing.Point(13, 573);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(103, 17);
             this.label11.TabIndex = 26;
@@ -315,7 +288,7 @@ namespace RSA
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(786, 424);
+            this.label12.Location = new System.Drawing.Point(972, 422);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(114, 17);
             this.label12.TabIndex = 27;
@@ -325,13 +298,14 @@ namespace RSA
             // 
             this.txtPublicKeyE.Location = new System.Drawing.Point(1051, 212);
             this.txtPublicKeyE.Name = "txtPublicKeyE";
+            this.txtPublicKeyE.ReadOnly = true;
             this.txtPublicKeyE.Size = new System.Drawing.Size(35, 22);
             this.txtPublicKeyE.TabIndex = 29;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(327, 427);
+            this.label13.Location = new System.Drawing.Point(549, 428);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(28, 17);
             this.label13.TabIndex = 30;
@@ -340,7 +314,7 @@ namespace RSA
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(471, 427);
+            this.label14.Location = new System.Drawing.Point(689, 425);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(28, 17);
             this.label14.TabIndex = 32;
@@ -357,7 +331,7 @@ namespace RSA
             // 
             // txtFindQ
             // 
-            this.txtFindQ.Location = new System.Drawing.Point(505, 424);
+            this.txtFindQ.Location = new System.Drawing.Point(723, 422);
             this.txtFindQ.Name = "txtFindQ";
             this.txtFindQ.ReadOnly = true;
             this.txtFindQ.Size = new System.Drawing.Size(100, 22);
@@ -365,7 +339,7 @@ namespace RSA
             // 
             // txtFindP
             // 
-            this.txtFindP.Location = new System.Drawing.Point(361, 424);
+            this.txtFindP.Location = new System.Drawing.Point(583, 425);
             this.txtFindP.Name = "txtFindP";
             this.txtFindP.ReadOnly = true;
             this.txtFindP.Size = new System.Drawing.Size(100, 22);
@@ -380,20 +354,11 @@ namespace RSA
             // 
             // txtDdecryption
             // 
-            this.txtDdecryption.Location = new System.Drawing.Point(906, 424);
+            this.txtDdecryption.Location = new System.Drawing.Point(1094, 419);
             this.txtDdecryption.Name = "txtDdecryption";
             this.txtDdecryption.ReadOnly = true;
             this.txtDdecryption.Size = new System.Drawing.Size(98, 22);
             this.txtDdecryption.TabIndex = 38;
-            // 
-            // btnClearAll
-            // 
-            this.btnClearAll.Location = new System.Drawing.Point(1051, 13);
-            this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(141, 54);
-            this.btnClearAll.TabIndex = 39;
-            this.btnClearAll.Text = "Clear All Fields";
-            this.btnClearAll.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -420,12 +385,12 @@ namespace RSA
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(218, 17);
             this.label17.TabIndex = 42;
-            this.label17.Text = "Enter d and n for decryption:";
+            this.label17.Text = "Enter e and n for decryption:";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(633, 424);
+            this.label18.Location = new System.Drawing.Point(829, 424);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(31, 17);
             this.label18.TabIndex = 43;
@@ -433,7 +398,7 @@ namespace RSA
             // 
             // txtPhiDecryption
             // 
-            this.txtPhiDecryption.Location = new System.Drawing.Point(667, 424);
+            this.txtPhiDecryption.Location = new System.Drawing.Point(866, 421);
             this.txtPhiDecryption.Name = "txtPhiDecryption";
             this.txtPhiDecryption.ReadOnly = true;
             this.txtPhiDecryption.Size = new System.Drawing.Size(100, 22);
@@ -455,11 +420,34 @@ namespace RSA
             this.textBox1.Size = new System.Drawing.Size(100, 22);
             this.textBox1.TabIndex = 46;
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label20.Location = new System.Drawing.Point(129, 431);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(268, 17);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "Open and select file from database:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label21.ForeColor = System.Drawing.Color.Red;
+            this.label21.Location = new System.Drawing.Point(228, 414);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(31, 17);
+            this.label21.TabIndex = 49;
+            this.label21.Text = "OR";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1209, 553);
+            this.ClientSize = new System.Drawing.Size(1209, 685);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtPhiDecryption);
@@ -467,7 +455,6 @@ namespace RSA
             this.Controls.Add(this.label17);
             this.Controls.Add(this.txtE);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.btnClearAll);
             this.Controls.Add(this.txtDdecryption);
             this.Controls.Add(this.txtNdecryption);
             this.Controls.Add(this.txtFindP);
@@ -480,10 +467,7 @@ namespace RSA
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btnDecrypt);
             this.Controls.Add(this.txtDecrypted);
-            this.Controls.Add(this.btnOpenEncypted);
-            this.Controls.Add(this.btnOpenPublicKey);
             this.Controls.Add(this.btnSaveEncrypted);
-            this.Controls.Add(this.btnSavePublicKey);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtPublicKeyN);
             this.Controls.Add(this.label9);
@@ -533,10 +517,7 @@ namespace RSA
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtPublicKeyN;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnSavePublicKey;
         private System.Windows.Forms.Button btnSaveEncrypted;
-        private System.Windows.Forms.Button btnOpenPublicKey;
-        private System.Windows.Forms.Button btnOpenEncypted;
         private System.Windows.Forms.TextBox txtDecrypted;
         private System.Windows.Forms.Button btnDecrypt;
         private System.Windows.Forms.Label label11;
@@ -549,7 +530,6 @@ namespace RSA
         private System.Windows.Forms.TextBox txtFindP;
         private System.Windows.Forms.TextBox txtNdecryption;
         private System.Windows.Forms.TextBox txtDdecryption;
-        private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtE;
         private System.Windows.Forms.Label label17;
@@ -557,6 +537,8 @@ namespace RSA
         private System.Windows.Forms.TextBox txtPhiDecryption;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
     }
 }
 

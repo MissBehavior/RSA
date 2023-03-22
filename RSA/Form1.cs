@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
+using DAL;
 
 
 namespace RSA
@@ -260,8 +261,22 @@ namespace RSA
             return decryptedtxt;
         }
 
+        private void btnSaveEncrypted_Click(object sender, EventArgs e)
+        {
+            if (txtEncrypted.Text == "" || txtN.Text == "" || txtE.Text == "")
+                MessageBox.Show("Error! All fields (Encrypted text, n and e need to be filled!");
+            else
+            {
+                RSAtable rsadb = new RSAtable();
+                //set name
+                rsadb.encryptedText = txtEncrypted.Text;
+                rsadb.n = Int16.Parse(txtPublicKeyN.Text);
+                rsadb.e = Int16.Parse(txtPublicKeyE.Text);
+                DAL.DAO.RSAdao.AddNewSave(rsadb);
+                MessageBox.Show("Encrypted text and public key saved to database.");
+            }
 
-
+        }
     }
 
 }

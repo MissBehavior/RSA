@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;
 
 
 namespace RSA
@@ -139,14 +140,123 @@ namespace RSA
 
             for (int i = 0; i < str.Length; i++)
             {
-                //ASCII range
-                //int x = (str[i] ^ e) % n;
-                double x = (Math.Pow(str[i], e)) % n;
+                //ASCII range (full)
+                ulong x = (ulong)((Math.Pow(str[i], e)) % n); //power: str[i] ^ e
 
                 encryptedtxt += (char)(x);
             }
             return encryptedtxt;
         }
 
+
+
+        private void btnDecrypt_Click(object sender, EventArgs e)
+        {
+            string encryptedText = txtEncrypted.Text;
+            int dDecryption = Int16.Parse(txtDdecryption.Text);
+            int nDecryption = Int16.Parse(txtNdecryption.Text);
+            //STEP 1: Find p and q values.
+            /*First, we need to find p and q values to canculate φ. For that we use mathematical algorythm - 
+             * Sieve of Eratosthenes - an ancient algorithm for finding all prime numbers up to any given limit.
+             * Using that algorythm we find prime pair.
+            */
+            int pDecryption = findPrimePair(nDecryption).i;
+            int qDecryption = findPrimePair(nDecryption).x;
+            txtFindP.Text = pDecryption.ToString();
+            txtFindQ.Text = qDecryption.ToString();
+            //STEP 2: Find Phi:
+            int phiDecrypt = (pDecryption - 1) * (qDecryption - 1);
+            txtPhiDecryption.Text = phiDecrypt.ToString();
+            //STEP 3: Decrypt:
+            string decryptedtxt = decryptedText(encryptedText, dDecryption, nDecryption);
+            txtDecrypted.Text = decryptedtxt;
+
+
+        }
+
+
+
+        static void SieveOfEratosthenes(int a, bool[] isPrime)
+        {
+            // Initialize all entries of bool
+            // array as true. A value in
+            // isPrime[i] will finally be false
+            // if i is Not a prime, else true
+            // bool isPrime[n+1];
+            isPrime[0] = isPrime[1] = false;
+            for (int i = 2; i <= a; i++)
+                isPrime[i] = true;
+
+            for (int p = 2; p * p <= a; p++)
+            {
+                // If isPrime[p] is not changed,
+                // then it is a prime
+                if (isPrime[p] == true)
+                {
+                    // Update all multiples of p
+                    for (int i = p * 2; i <= a; i += p)
+                        isPrime[i] = false;
+                }
+            }
+        }
+
+        // Function to print a prime
+        // pair with given product
+        static (int x, int i) findPrimePair(int a)
+        {
+            int flag = 0;
+
+            // Generating primes using Sieve
+            bool[] isPrime = new bool[a + 1];
+            SieveOfEratosthenes(a, isPrime);
+
+            // Traversing all numbers to
+            // find first pair
+            for (int i = 2; i < a; i++)
+            {
+                int x = a / i;
+                
+                if (isPrime[i] && isPrime[x] &&
+                        x != i && x * i == a)
+                {
+                    //Console.Write(i + " " + x);
+                    flag = 1;
+                    return (x, i);
+                }
+            }
+
+            if (flag == 0)
+            {
+                MessageBox.Show("Error! No p and q values found.");
+                throw new Exception("No P and Q found");
+            }
+            else
+            {
+                throw new Exception("Error in code");
+            }
+            
+
+        }
+
+        // decryption
+        static String decryptedText(String str, int d, int n)
+        {
+            String decryptedtxt = "";
+            BigInteger nBig = new BigInteger(n);
+            for (int i = 0; i < str.Length; i++)
+            {
+                //ASCII range (full)
+                BigInteger iBig = new BigInteger(str[i]);
+                BigInteger x  = ((BigInteger.Pow(iBig, d)) % nBig);
+                int decryptedX = (int)x;
+                decryptedtxt += (char)(decryptedX);
+            }
+            return decryptedtxt;
+        }
+
+
+
     }
+
 }
+

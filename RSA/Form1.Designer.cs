@@ -63,11 +63,14 @@ namespace RSA
             this.label15 = new System.Windows.Forms.Label();
             this.txtFindQ = new System.Windows.Forms.TextBox();
             this.txtFindP = new System.Windows.Forms.TextBox();
-            this.txtFindPhi = new System.Windows.Forms.TextBox();
-            this.txtD = new System.Windows.Forms.TextBox();
+            this.txtNdecryption = new System.Windows.Forms.TextBox();
+            this.txtDdecryption = new System.Windows.Forms.TextBox();
             this.btnClearAll = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtE = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtPhiDecryption = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtP
@@ -80,9 +83,10 @@ namespace RSA
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.label1.Location = new System.Drawing.Point(13, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 17);
+            this.label1.Size = new System.Drawing.Size(61, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Enter p";
             // 
@@ -96,20 +100,22 @@ namespace RSA
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.label2.Location = new System.Drawing.Point(141, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 17);
+            this.label2.Size = new System.Drawing.Size(61, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Enter q";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.label3.Location = new System.Drawing.Point(14, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(249, 17);
+            this.label3.Size = new System.Drawing.Size(296, 17);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Enter text for encryption - x (Plain text)";
+            this.label3.Text = "Enter text for encryption - x (Plain text):";
             // 
             // txtPlainText
             // 
@@ -123,6 +129,7 @@ namespace RSA
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label4.ForeColor = System.Drawing.Color.Red;
             this.label4.Location = new System.Drawing.Point(10, 7);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(471, 17);
@@ -169,9 +176,9 @@ namespace RSA
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(167, 214);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 17);
+            this.label6.Size = new System.Drawing.Size(31, 17);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Φ[n] =";
+            this.label6.Text = "Φ =";
             // 
             // txtPhi
             // 
@@ -286,12 +293,13 @@ namespace RSA
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(12, 364);
+            this.btnDecrypt.Location = new System.Drawing.Point(13, 409);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(75, 23);
             this.btnDecrypt.TabIndex = 25;
             this.btnDecrypt.Text = "Decrypt";
             this.btnDecrypt.UseVisualStyleBackColor = true;
+            this.btnDecrypt.Click += new System.EventHandler(this.btnDecrypt_Click);
             // 
             // label11
             // 
@@ -305,7 +313,7 @@ namespace RSA
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(890, 395);
+            this.label12.Location = new System.Drawing.Point(14, 387);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(114, 17);
             this.label12.TabIndex = 27;
@@ -321,7 +329,7 @@ namespace RSA
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 395);
+            this.label13.Location = new System.Drawing.Point(327, 427);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(28, 17);
             this.label13.TabIndex = 30;
@@ -330,7 +338,7 @@ namespace RSA
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(186, 395);
+            this.label14.Location = new System.Drawing.Point(471, 427);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(28, 17);
             this.label14.TabIndex = 32;
@@ -339,39 +347,41 @@ namespace RSA
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(365, 390);
+            this.label15.Location = new System.Drawing.Point(248, 390);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(47, 17);
+            this.label15.Size = new System.Drawing.Size(28, 17);
             this.label15.TabIndex = 34;
-            this.label15.Text = "Φ[n] =";
+            this.label15.Text = "n =";
             // 
             // txtFindQ
             // 
-            this.txtFindQ.Location = new System.Drawing.Point(220, 390);
+            this.txtFindQ.Location = new System.Drawing.Point(505, 424);
             this.txtFindQ.Name = "txtFindQ";
+            this.txtFindQ.ReadOnly = true;
             this.txtFindQ.Size = new System.Drawing.Size(100, 22);
             this.txtFindQ.TabIndex = 35;
             // 
             // txtFindP
             // 
-            this.txtFindP.Location = new System.Drawing.Point(48, 390);
+            this.txtFindP.Location = new System.Drawing.Point(361, 424);
             this.txtFindP.Name = "txtFindP";
+            this.txtFindP.ReadOnly = true;
             this.txtFindP.Size = new System.Drawing.Size(100, 22);
             this.txtFindP.TabIndex = 36;
             // 
-            // txtFindPhi
+            // txtNdecryption
             // 
-            this.txtFindPhi.Location = new System.Drawing.Point(418, 390);
-            this.txtFindPhi.Name = "txtFindPhi";
-            this.txtFindPhi.Size = new System.Drawing.Size(100, 22);
-            this.txtFindPhi.TabIndex = 37;
+            this.txtNdecryption.Location = new System.Drawing.Point(282, 389);
+            this.txtNdecryption.Name = "txtNdecryption";
+            this.txtNdecryption.Size = new System.Drawing.Size(100, 22);
+            this.txtNdecryption.TabIndex = 37;
             // 
-            // txtD
+            // txtDdecryption
             // 
-            this.txtD.Location = new System.Drawing.Point(1010, 392);
-            this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(35, 22);
-            this.txtD.TabIndex = 38;
+            this.txtDdecryption.Location = new System.Drawing.Point(134, 387);
+            this.txtDdecryption.Name = "txtDdecryption";
+            this.txtDdecryption.Size = new System.Drawing.Size(98, 22);
+            this.txtDdecryption.TabIndex = 38;
             // 
             // btnClearAll
             // 
@@ -399,16 +409,46 @@ namespace RSA
             this.txtE.Size = new System.Drawing.Size(100, 22);
             this.txtE.TabIndex = 41;
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label17.Location = new System.Drawing.Point(14, 367);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(218, 17);
+            this.label17.TabIndex = 42;
+            this.label17.Text = "Enter d and n for decryption:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(633, 424);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(31, 17);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Φ =";
+            // 
+            // txtPhiDecryption
+            // 
+            this.txtPhiDecryption.Location = new System.Drawing.Point(667, 424);
+            this.txtPhiDecryption.Name = "txtPhiDecryption";
+            this.txtPhiDecryption.ReadOnly = true;
+            this.txtPhiDecryption.Size = new System.Drawing.Size(100, 22);
+            this.txtPhiDecryption.TabIndex = 44;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1209, 553);
+            this.Controls.Add(this.txtPhiDecryption);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.txtE);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.btnClearAll);
-            this.Controls.Add(this.txtD);
-            this.Controls.Add(this.txtFindPhi);
+            this.Controls.Add(this.txtDdecryption);
+            this.Controls.Add(this.txtNdecryption);
             this.Controls.Add(this.txtFindP);
             this.Controls.Add(this.txtFindQ);
             this.Controls.Add(this.label15);
@@ -486,11 +526,14 @@ namespace RSA
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtFindQ;
         private System.Windows.Forms.TextBox txtFindP;
-        private System.Windows.Forms.TextBox txtFindPhi;
-        private System.Windows.Forms.TextBox txtD;
+        private System.Windows.Forms.TextBox txtNdecryption;
+        private System.Windows.Forms.TextBox txtDdecryption;
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtE;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtPhiDecryption;
     }
 }
 

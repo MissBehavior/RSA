@@ -85,12 +85,15 @@ namespace RSA
                  * (because e and φ(pq) are required to be coprime in the RSA algorithm) 
                  * and solve for x which gives you your d. 
                  */
-                int d = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phi)); //finding d - private key
+                //int d = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phi)); //finding d - private key
+                int d = modInverse(eChosenNum, phi);
                 txtExtendedgcdD.Text = d.ToString();
                 //STEP 6: Encrypt the plain text x:
                 string plainText = txtPlainText.Text;
                 string encryptedtxt = encryptedText(plainText, eChosenNum, n);
                 txtEncrypted.Text = encryptedtxt;
+                txtNdecryption.Text = n.ToString();
+
             }
             else
                 MessageBox.Show("Error! Please control the information.");
@@ -136,7 +139,7 @@ namespace RSA
         }
 
 
-        private static int ExtendedEuclideanAlgorithm(int a, int b)
+        /*private static int ExtendedEuclideanAlgorithm(int a, int b)
         {
             int s = 0, t = 1, r = b, old_s = 1, old_t = 0, old_r = a;
             while (r != 0)
@@ -158,7 +161,7 @@ namespace RSA
 
             return old_s;
         }
-
+        */
 
 
         // encryption
@@ -179,7 +182,14 @@ namespace RSA
         }
 
 
+        static int modInverse(int A, int M)
+        {
 
+            for (int X = 1; X < M; X++)
+                if (((A % M) * (X % M)) % M == 1)
+                    return X;
+            return 1;
+        }
 
 
         private void btnDecrypt_Click(object sender, EventArgs e)
@@ -203,9 +213,10 @@ namespace RSA
                 //STEP 2: Find Phi and d:
                 int phiDecryption = (pDecryption - 1) * (qDecryption - 1);
                 txtPhiDecryption.Text = phiDecryption.ToString();
-                int dDecryption = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phiDecryption)); //finding d - private key
-                txtDdecryption.Text = dDecryption.ToString();
+                //int dDecryption = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phiDecryption)); //finding d - private key
                 //STEP 3: Decrypt:
+                int dDecryption = modInverse(eChosenNum, phiDecryption);
+                txtDdecryption.Text = dDecryption.ToString();
                 string decryptedtxt = decryptedText(encryptedText, dDecryption, nDecryption);
                 txtDecrypted.Text = decryptedtxt;
             }

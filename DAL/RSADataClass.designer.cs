@@ -33,6 +33,9 @@ namespace DAL
     partial void InsertRSAtable(RSAtable instance);
     partial void UpdateRSAtable(RSAtable instance);
     partial void DeleteRSAtable(RSAtable instance);
+    partial void InsertRSA(RSA instance);
+    partial void UpdateRSA(RSA instance);
+    partial void DeleteRSA(RSA instance);
     #endregion
 		
 		public RSADataClassDataContext() : 
@@ -72,6 +75,14 @@ namespace DAL
 				return this.GetTable<RSAtable>();
 			}
 		}
+		
+		public System.Data.Linq.Table<RSA> RSAs
+		{
+			get
+			{
+				return this.GetTable<RSA>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RSAtable")]
@@ -107,7 +118,141 @@ namespace DAL
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync = AutoSync.OnInsert, DbType ="Int NOT NULL", IsPrimaryKey=true, IsDbGenerated = true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_encryptedText", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string encryptedText
+		{
+			get
+			{
+				return this._encryptedText;
+			}
+			set
+			{
+				if ((this._encryptedText != value))
+				{
+					this.OnencryptedTextChanging(value);
+					this.SendPropertyChanging();
+					this._encryptedText = value;
+					this.SendPropertyChanged("encryptedText");
+					this.OnencryptedTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_n", DbType="Int NOT NULL")]
+		public int n
+		{
+			get
+			{
+				return this._n;
+			}
+			set
+			{
+				if ((this._n != value))
+				{
+					this.OnnChanging(value);
+					this.SendPropertyChanging();
+					this._n = value;
+					this.SendPropertyChanged("n");
+					this.OnnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_e", DbType="Int NOT NULL")]
+		public int e
+		{
+			get
+			{
+				return this._e;
+			}
+			set
+			{
+				if ((this._e != value))
+				{
+					this.OneChanging(value);
+					this.SendPropertyChanging();
+					this._e = value;
+					this.SendPropertyChanged("e");
+					this.OneChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RSA")]
+	public partial class RSA : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _encryptedText;
+		
+		private int _n;
+		
+		private int _e;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnencryptedTextChanging(string value);
+    partial void OnencryptedTextChanged();
+    partial void OnnChanging(int value);
+    partial void OnnChanged();
+    partial void OneChanging(int value);
+    partial void OneChanged();
+    #endregion
+		
+		public RSA()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int id
 		{
 			get

@@ -22,5 +22,10 @@ namespace DAL.DAO
             }
 
         }
+
+        public static List<RSAtable> GetRSAdbData()
+        {
+            return db.RSAtables.ToList();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
+using DAL.DAO;
 using DAL;
 
 
@@ -15,7 +16,7 @@ namespace RSA
 {
     public partial class Form1 : Form
     {
-        int eChosenNum = 5; //exponent e for Eucledean algorythm GCD
+        int eChosenNum = 11; //exponent e for Eucledean algorythm GCD
         public Form1()
         {
             InitializeComponent();
@@ -27,12 +28,25 @@ namespace RSA
 
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-           
-            
-            if (txtP.Text != "" & txtQ.Text != "")
+
+
+            if (txtP.Text == "" & txtQ.Text == "")
+            {
+                MessageBox.Show("Error! Please enter p and q values (prime numbers).");
+                txtP.BackColor = Color.Red;
+                txtQ.BackColor = Color.Red;
+            }
+            else if (Int32.Parse(txtP.Text) < 7 || Int32.Parse(txtP.Text) < 7)
+            {
+                MessageBox.Show("Error! P and Q values must be bigger than 7! P > 7, Q > 7.");
+                txtP.BackColor = Color.Red;
+                txtQ.BackColor = Color.Red;
+            }
+            else if (txtP.Text != "" & txtQ.Text != "")
             {
                 txtP.BackColor = Color.White;
                 txtQ.BackColor = Color.White;
+                txtGCD.BackColor = Color.White;
                 int p = Int16.Parse(txtP.Text);
                 int q = Int16.Parse(txtQ.Text);
                 //STEP 1: Find n value:
@@ -55,7 +69,8 @@ namespace RSA
                  *** J is the upper number of division and I is the lower. I/J or M/N
                  *If the GCD = 1, the numbers are said to be relatively prime. 
                  * */
-                int gcd = findGCD(phi, eChosenNum);
+                //int gcd = findGCD(phi, eChosenNum);
+                int gcd = GetGCDBySubtraction(phi, eChosenNum);
                 txtGCD.Text = gcd.ToString();
                 if (gcd != 1)
                 {
@@ -76,17 +91,13 @@ namespace RSA
                 string plainText = txtPlainText.Text;
                 string encryptedtxt = encryptedText(plainText, eChosenNum, n);
                 txtEncrypted.Text = encryptedtxt;
-            } else
-            {
-                MessageBox.Show("Error! Please enter p and q values (prime numbers).");
-                txtP.BackColor = Color.Red;
-                txtQ.BackColor = Color.Red;
             }
-
+            else
+                MessageBox.Show("Error! Please control the information.");
         }
 
         //Euclidean algorythm:
-        public static int findGCD(int m, int n) //m is upper number n is lower. For example, 12/4 m=12, 4=n
+        /*public static int findGCD(int m, int n) //m is upper number n is lower. For example, 12/4 m=12, 4=n
         {
             int temp;
             int r;
@@ -106,6 +117,22 @@ namespace RSA
                 n = r;
             }
             return n;
+        }
+        */
+
+        // while loop is created that will continue processing until one of the values has been reduced to zero.
+        // Within the loop the smaller of the two values is subtracted from the larger.
+        // Once the loop has exited, one value will be zero and the other will contain the GCD.
+        public static int GetGCDBySubtraction(int value1, int value2)
+        {
+            while (value1 != 0 && value2 != 0)
+            {
+                if (value1 > value2)
+                    value1 -= value2;
+                else
+                    value2 -= value1;
+            }
+            return Math.Max(value1, value2);
         }
 
 
@@ -157,26 +184,32 @@ namespace RSA
 
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            string encryptedText = txtEncrypted.Text;
-            //int dDecryption = Int16.Parse(txtDdecryption.Text);
-            int nDecryption = Int16.Parse(txtNdecryption.Text);
-            //STEP 1: Find p and q values.
-            /*First, we need to find p and q values to canculate φ. For that we use mathematical algorythm - 
-             * Sieve of Eratosthenes - an ancient algorithm for finding all prime numbers up to any given limit.
-             * Using that algorythm we find prime pair.
-            */
-            int pDecryption = findPrimePair(nDecryption).i;
-            int qDecryption = findPrimePair(nDecryption).x;
-            txtFindP.Text = pDecryption.ToString();
-            txtFindQ.Text = qDecryption.ToString();
-            //STEP 2: Find Phi and d:
-            int phiDecryption = (pDecryption - 1) * (qDecryption - 1);
-            txtPhiDecryption.Text = phiDecryption.ToString();
-            int dDecryption = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phiDecryption)); //finding d - private key
-            txtDdecryption.Text = dDecryption.ToString();
-            //STEP 3: Decrypt:
-            string decryptedtxt = decryptedText(encryptedText, dDecryption, nDecryption);
-            txtDecrypted.Text = decryptedtxt;
+            if (txtEdecryption.Text.Trim() == "" || txtNdecryption.Text.Trim() == "" || txtEncrypted.Text == "")
+                MessageBox.Show("Error! Please enter encrypted text, e and n to the fields.");
+            else
+            {
+                string encryptedText = txtEncrypted.Text;
+                //int dDecryption = Int16.Parse(txtDdecryption.Text);
+                int nDecryption = Int16.Parse(txtNdecryption.Text);
+                //STEP 1: Find p and q values.
+                /*First, we need to find p and q values to canculate φ. For that we use mathematical algorythm - 
+                 * Sieve of Eratosthenes - an ancient algorithm for finding all prime numbers up to any given limit.
+                 * Using that algorythm we find prime pair.
+                */
+                int pDecryption = findPrimePair(nDecryption).i;
+                int qDecryption = findPrimePair(nDecryption).x;
+                txtFindP.Text = pDecryption.ToString();
+                txtFindQ.Text = qDecryption.ToString();
+                //STEP 2: Find Phi and d:
+                int phiDecryption = (pDecryption - 1) * (qDecryption - 1);
+                txtPhiDecryption.Text = phiDecryption.ToString();
+                int dDecryption = Math.Abs(ExtendedEuclideanAlgorithm(eChosenNum, phiDecryption)); //finding d - private key
+                txtDdecryption.Text = dDecryption.ToString();
+                //STEP 3: Decrypt:
+                string decryptedtxt = decryptedText(encryptedText, dDecryption, nDecryption);
+                txtDecrypted.Text = decryptedtxt;
+            }
+            
 
 
         }
@@ -270,12 +303,47 @@ namespace RSA
                 RSAtable rsadb = new RSAtable();
                 //set name
                 rsadb.encryptedText = txtEncrypted.Text;
-                rsadb.n = Int16.Parse(txtPublicKeyN.Text);
-                rsadb.e = Int16.Parse(txtPublicKeyE.Text);
+                rsadb.n = Convert.ToInt32(txtPublicKeyN.Text);
+                rsadb.e = Convert.ToInt32(txtPublicKeyE.Text);
                 DAL.DAO.RSAdao.AddNewSave(rsadb);
-                MessageBox.Show("Encrypted text and public key saved to database.");
+                MessageBox.Show("Encrypted text and public key was saved to database.");
+                list = RSAdao.GetRSAdbData();
+                dataGridView2.DataSource = list;
+
             }
 
+        }
+        List<RSAtable> list = new List<RSAtable>();
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'rSADataSet.RSAtable' table. You can move, or remove it, as needed.
+            //this.rSAtableTableAdapter.Fill(this.rSADataSet.RSAtable);
+
+            list = RSAdao.GetRSAdbData();
+            dataGridView2.DataSource = list;
+            dataGridView2.Columns[0].Visible = false;
+            dataGridView2.Columns[1].HeaderText = "Encrypted Text";
+
+        }
+
+        private void txtP_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar);
+        }
+
+        private void txtQ_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar);
+        }
+
+        private void txtEdecryption_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar);
+        }
+
+        private void txtNdecryption_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar);
         }
     }
 

@@ -520,6 +520,7 @@ namespace RSA
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(573, 118);
             this.dataGridView2.TabIndex = 51;
+            this.dataGridView2.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_RowEnter);
             // 
             // Form1
             // 

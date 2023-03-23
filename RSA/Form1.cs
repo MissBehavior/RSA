@@ -16,7 +16,7 @@ namespace RSA
 {
     public partial class Form1 : Form
     {
-        int eChosenNum = 11; //exponent e for Eucledean algorythm GCD
+        int eChosenNum = 5; //exponent e for Eucledean algorythm GCD
         public Form1()
         {
             InitializeComponent();
@@ -344,6 +344,13 @@ namespace RSA
         private void txtNdecryption_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar);
+        }
+
+        private void dataGridView2_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            txtEdecryption.Text = dataGridView2.Rows[e.RowIndex].Cells[3].Value.ToString();
+            txtEncrypted.Text = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
+            txtNdecryption.Text = dataGridView2.Rows[e.RowIndex].Cells[2].Value.ToString();
         }
     }
 
